@@ -10,9 +10,6 @@ services:
       - "8000:8000"
     depends_on:
       - redis
-    volumes:
-      - ./demo:/app/demo
-    command: python /app/server.py
 
   redis:
     image: redis:3.2.0
