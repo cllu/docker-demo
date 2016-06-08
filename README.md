@@ -2,6 +2,12 @@
 
 A sample Python Web application is used to illustrate the usage of Docker.
 
+Provides three REST API endpoints:
+
+- `/`, API information
+- `/reset`, reset the inventory to 500,000
+- `/reserve`, reduce the inventory by 1 and return the new inventory
+
 Setup:
 
 - ensure redis 3 is running on localhost
