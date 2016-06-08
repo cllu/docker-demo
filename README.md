@@ -4,6 +4,7 @@ A sample Python Web application is used to illustrate the usage of Docker.
 
 Setup:
 
+- ensure redis 3 is running on localhost
 - put an entry `127.0.0.1 redis` to `/etc/hosts`
 - ensure Python 3.5.1 is installed
   - use `pyvenv-3.5 venv` to create a virtual environment in the project folder
@@ -16,4 +17,4 @@ Setup:
 
 ## Deployment
 
-- use `./bin/start.sh` to start the uWSGI server listening on port 80000
+- use `./bin/start.sh` to start the uWSGI server listening on port 8000
