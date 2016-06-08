@@ -1,0 +1,52 @@
+version: '2'
+
+services:
+  lb:
+    build:
+      context: .
+      dockerfile: docker/load_balancer/Dockerfile
+    image: cllu/docker-demo_lb
+    container_name: lb
+    ports:
+      - "80:80"
+    environment:
+      - constraint:node==master
+      - APP_NAME=docker-demo
+      - CONSUL_URL=${CONSUL_IP}:8500
+    depends_on:
+      - app
+    networks:
+      - front-tier
+
+  app:
+    image: cllu/docker-demo
+    ports:
+      - "8000"
+    environment:
+      - APP_PORT=8000
+      - REDIS_IP=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    networks:
+      - front-tier
+      - back-tier
+
+  redis:
+    image: redis:3.2.0
+    container_name: redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - back-tier
+
+volumes:
+  redis-data:
+    driver: local
+
+networks:
+  front-tier:
+    driver: overlay
+  back-tier:
+    driver: overlay

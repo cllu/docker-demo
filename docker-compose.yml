@@ -1,35 +1,18 @@
 version: '2'
 
 services:
-  lb:
-    build:
-      context: .
-      dockerfile: docker/load_balancer/Dockerfile
-    image: cllu/demo-load_balancer
-    container_name: lb
-    ports:
-      - "80:80"
-    environment:
-      - constraint:node==master
-      - APP_NAME=docer-demo
-      - CONSUL_URL=${KV_IP}:8500
-    depends_on:
-      - app
-    networks:
-      - front-tier
-
   app:
     build:
       context: .
       dockerfile: docker/app/Dockerfile
-    image: cllu/demo-app
+    image: cllu/docker-demo
     ports:
       - "8000:8000"
     depends_on:
       - redis
     networks:
-      - front-tier
-      - back-tier
+      - front
+      - back
 
   redis:
     image: redis:3.2.0
@@ -38,14 +21,14 @@ services:
     volumes:
       - redis-data:/data
     networks:
-      - back-tier
+      - back
 
 volumes:
   redis-data:
     driver: local
 
 networks:
-  front-tier:
+  front:
     driver: bridge
-  back-tier:
+  back:
     driver: bridge
