@@ -2,6 +2,12 @@
 
 A sample Python Web application is used to illustrate the usage of Docker.
 
+Provides three REST API endpoints:
+
+- `/`, API information
+- `/reset`, reset the inventory to 500,000
+- `/reserve`, reduce the inventory by 1 and return the new inventory
+
 Instructions:
 
 - use `docker-compose build` to build application images
@@ -83,3 +89,4 @@ Then we are ready to connect to Swarm `eval $(docker-machine env -swarm master)`
 - run `export CONSUL_IP=$(docker-machine ip consul)`
 - use `docker-compose -f docker-compose-production.yml up -d` to start containers.
 - use `docker-compose -f docker-compose-production.yml scale app=2` to start more app containers.
+- use `docker-compose -f docker-compose-production.yml exec lb cat /etc/nginx/conf.d/default.conf` to check the generated nginx config.
